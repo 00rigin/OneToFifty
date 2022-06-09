@@ -167,16 +167,14 @@ const OneToFifty = () => {
 
 
     const onReset = () => {
-        console.log("at Reset Botton setNo : "+setNumber)
         dispatch({type: RESET});
     };
 
     useEffect(() => {
         let set = setNumber;
 
-        console.log("@tablesetter setNumber : "+set);
+        // console.log("@tablesetter setNumber : "+set);
 
-        //
         let numbers1 = numberShuffler(1);
         let numbers2 = numberShuffler(26);
 
@@ -191,9 +189,6 @@ const OneToFifty = () => {
         }
 
     },[setNumber]); // 세트 넘버 바뀌면 리랜더링 ( 숫자 다시 뿌림)
-
-
-
 
     return(
         <>

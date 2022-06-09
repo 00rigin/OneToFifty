@@ -9,7 +9,8 @@ const Table = ({tableData, historyData,activateButton, dispatch}) => {
         <table>
             <tbody>
             {Array(tableData.length).fill().map((tr,i) =>(
-                <Tr key = {i} dispatch = {dispatch} rowIndex = {i} rowData = {tableData[i]} historyData = {historyData} activateButton = {activateButton}/>
+                <Tr key = {i} dispatch = {dispatch} rowIndex = {i} rowData = {tableData[i]}
+                    historyData = {historyData} activateButton = {activateButton}/>
             ))}
             </tbody>
         </table>

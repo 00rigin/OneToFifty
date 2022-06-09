@@ -1,24 +1,23 @@
-import React, {useCallback} from 'react';
-import {CLICK_BUTTON} from "./OneToFifty";
+import React, {memo, useCallback} from 'react';
+import {CHANGE_TABLE, CLICK_BUTTON} from "./OneToFifty";
 
-const Td = ({rowIndex, cellIndex, dispatch, cellData}) => {
-    console.log('Td rendering');
-    console.log(cellData);
+const Td = ({rowIndex, cellIndex, historyData, dispatch, cellData}) => {
+    // console.log('Td rendering');
+    // console.log(cellData);
 
     const onClickButton = useCallback(()=>{
-        console.log("Click the button");
-        if(cellData){
-            return;
-        }
-        dispatch({type: CLICK_BUTTON, row: rowIndex, cell: cellIndex});
+
+        dispatch({type: CLICK_BUTTON, row : rowIndex, cell: cellIndex, cellData: cellData});
 
     },[]);
 
     return(
+        <td>
+            <button onClick={onClickButton}>{cellData}</button>
+        </td>
 
-        <button onClick={onClickButton}>{cellData}</button>
     );
 
 };
 
-export default Td;
+export default memo(Td);

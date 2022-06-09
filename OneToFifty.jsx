@@ -20,8 +20,8 @@ export const CHANGE_TABLE = 'CHANGE_TABLE';
 // export const SET_SET_NUMBER = 'SET_SET_NUMBER';
 
 const reducer = (state, action) => {
-    console.log("@ reducer");
-    console.log(action.tableData);
+    // console.log("@ reducer");
+    // console.log(action.tableData);
     switch (action.type){
         case SET_TABLE_DATA:
             return{
@@ -29,10 +29,41 @@ const reducer = (state, action) => {
                 tableData: action.tableData,
             };
         case CLICK_BUTTON:
+            let inputSetNumber = state.setNumber;
+            let ToChangeNumberOrder = state.numberHistory;
+
+            if(action.cellData != ToChangeNumberOrder+1){ // 틀린 숫자 클릭릭
+                // 틀린부분 처리할 곳
+
+                console.log("틀린 숫자 누름. 예상 : " + (ToChangeNumberOrder+1) );
+            }
+            else{
+                if(action.cellData === 1){
+                    // 타이머 시작하는 부분
+                }
+                else if(action.cellData === 25){
+                    inputSetNumber = 2;
+                    // 테이블 바꿔야함
+                }
+                else if(action.cellData === 50){
+                    // 타이머 끝나기
+                    // 리셋버튼 활성화
+                }
+                ToChangeNumberOrder++;
+            }
+
+            const activateButton = [...state.activateButton];
+            activateButton[action.row] = [...activateButton[action.row]];
+            activateButton[action.row][action.cell] = false;
+
+            // console.log("row : "+action.row);
+            // console.log("cell : "+action.cell);
+
             return{
                 ...state,
-                activateButton: action.
-
+                activateButton,
+                numberHistory: ToChangeNumberOrder,
+                setNumber: inputSetNumber,
             };
         case CHANGE_TABLE:
             return{
@@ -84,58 +115,24 @@ const OneToFifty = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const {tableData, setNumber, activateButton, numberHistory} = state;
 
-    console.log(numbers1);
-    console.log(numbers2);
+    // console.log(numbers1);
+    // console.log(numbers2);
 
     useEffect(() => {
         let set = setNumber;
 
         if(setNumber === 1){
             dispatch({type: SET_TABLE_DATA, tableData: setTableNumber(numbers1)});
-            console.log(setTableNumber(numbers1));
-
         }
         else if (setNumber === 2){
             dispatch({type: SET_TABLE_DATA, tableData: setTableNumber(numbers2)})
         }
 
-
     },[setNumber]); // 세트 넘버 바뀌면 리랜더링 ( 숫자 다시 뿌림)
-
-
-    const onClickListener = useCallback((e)=> {
-
-        if(e.target.value != state.numberHistory+1){ // 틀린 숫자 클릭릭
-            // 틀린부분 처리할 곳
-            console.log("틀린 숫자 누름. 예상 : " + (state.numberHistory+1) );
-        }
-        else{
-            if(e.target.value === 1){
-                // 타이머 시작하는 부분
-            }
-            else if(e.target.value === 25){
-                dispatch({type:CHANGE_TABLE, setNumber: 2});
-                // 테이블 바꿔야함
-            }
-            else if(e.target.value === 50){
-                // 타이머 끝나기
-                // 리셋버튼 활성화
-            }
-
-        }
-
-
-
-       dispatch({type: CLICK_BUTTON})
-    },[]);
-
-
-
-
 
     return(
         <>
-            <Table onClick = {onClickListener} tableData = {state.tableData} dispatch = {dispatch}/>
+            <Table tableData = {state.tableData} historyData = {state.numberHistory} dispatch = {dispatch}/>
             {/*{timer}*/}
             {/*<button onClick={onReset}>다시 시작</button>*/}
 

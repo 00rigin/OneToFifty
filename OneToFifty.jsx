@@ -21,7 +21,6 @@ export const SET_TABLE_DATA = 'SET_TABLE_DATA';
 export const CLICK_BUTTON = 'CLICK_BUTTON';
 export const CHANGE_TABLE = 'CHANGE_TABLE';
 export const RESET = 'RESET';
-// export const SET_SET_NUMBER = 'SET_SET_NUMBER';
 
 const reducer = (state, action) => {
     // console.log("@ reducer");
@@ -159,8 +158,6 @@ const setTableNumber = (numbers) => {
 
 
 const OneToFifty = () => {
-    // const numbers1 = useMemo( () => numberShuffler(1), []);
-    // const numbers2 = useMemo(() => numberShuffler(26), []);
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const {setNumber, reset} = state;
@@ -175,17 +172,11 @@ const OneToFifty = () => {
 
         // console.log("@tablesetter setNumber : "+set);
 
-        let numbers1 = numberShuffler(1);
-        let numbers2 = numberShuffler(26);
-
-
         if(set === 1 || set === 0){
-
-            dispatch({type: SET_TABLE_DATA, tableData: setTableNumber(numbers1), setNumber: 1});
+            dispatch({type: SET_TABLE_DATA, tableData: setTableNumber(numberShuffler(1)), setNumber: 1});
         }
         else if (set === 2){
-
-            dispatch({type: SET_TABLE_DATA, tableData: setTableNumber(numbers2), setNumber: 2});
+            dispatch({type: SET_TABLE_DATA, tableData: setTableNumber(numberShuffler(26)), setNumber: 2});
         }
 
     },[setNumber]); // 세트 넘버 바뀌면 리랜더링 ( 숫자 다시 뿌림)
